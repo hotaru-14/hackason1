@@ -148,7 +148,7 @@ export const deepPaperAgent = new Agent({
   },
   memory: new Memory({
     storage: new LibSQLStore({
-      url: 'file:../agent-memory.db',
+      url: ':memory:',
     }),
     options: {
       lastMessages: 20,
