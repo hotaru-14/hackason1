@@ -1,7 +1,5 @@
 import { google } from '@ai-sdk/google';
 import { Agent } from '@mastra/core/agent';
-import { Memory } from '@mastra/memory';
-import { LibSQLStore } from '@mastra/libsql';
 
 // 論文検索ツールのインポート
 import { arxivTool } from '../tools/arxiv-tool';
@@ -146,12 +144,12 @@ export const deepPaperAgent = new Agent({
     braveSearchTool,
     googleGroundingSearchTool,
   },
-  memory: new Memory({
-    storage: new LibSQLStore({
-      url: ':memory:',
-    }),
-    options: {
-      lastMessages: 20,
-    },
-  }),
+  // memory: new Memory({
+  //   storage: new LibSQLStore({
+  //     url: ':memory:',
+  //   }),
+  //   options: {
+  //     lastMessages: 20,
+  //   },
+  // }),
 });
