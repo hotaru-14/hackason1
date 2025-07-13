@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Paper Agent
 
-## Getting Started
+学術論文検索特化型リサーチエージェント - 複数の学術データベースを駆使して徹底的な論文検索を実行し、研究動向を分析します。
 
-First, run the development server:
+## 特徴
+
+- **多角的論文検索**: arXiv、Semantic Scholar、CORE、J-STAGE、Brave Searchを統合
+- **日本語対応**: 日本の学術動向も含めた包括的な研究分析
+- **リアルタイム検索**: ストリーミング対応でライブ検索結果表示
+- **Mastraフレームワーク**: AIエージェント、ワークフロー、ツールの統合プラットフォーム
+
+## 技術スタック
+
+- **フロントエンド**: Next.js 15, TypeScript, Tailwind CSS
+- **AIフレームワーク**: Mastra (Google Gemini 2.5 Flash)
+- **データベース**: LibSQL
+- **デプロイ**: Vercel
+
+## 開発
 
 ```bash
+# 依存関係のインストール
+npm install
+
+# 開発サーバー起動
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# ビルド
+npm run build
+
+# リント
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 環境変数
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# API キー (必要に応じて)
+GOOGLE_API_KEY=your-gemini-api-key
+CORE_API_KEY=your-core-api-key
+BRAVE_API_KEY=your-brave-api-key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 主要コンポーネント
 
-## Learn More
+- `src/mastra/agents/deep-paper-agent.ts` - メインの論文検索エージェント
+- `src/mastra/tools/` - 各種検索ツール (arXiv, Semantic Scholar等)
+- `src/components/DeepPaperChat.tsx` - チャットUI
+- `src/app/api/agents/deep-paper/` - エージェントAPI
 
-To learn more about Next.js, take a look at the following resources:
+## デプロイ
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Vercelにデプロイ
+vercel deploy
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+アプリケーションは [http://localhost:3000](http://localhost:3000) でアクセスできます。

@@ -9,19 +9,34 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.2.22",
+    "@google/genai": "^1.9.0",
+    "@mastra/core": "^0.10.12",
+    "@mastra/libsql": "^0.11.0",
+    "@mastra/loggers": "^0.10.3",
+    "@mastra/memory": "^0.11.2",
+    "@tailwindcss/typography": "^0.5.16",
+    "canvas": "^3.1.2",
+    "next": "15.3.5",
+    "pdf-parse-debugging-disabled": "^1.1.1",
+    "pdf2pic": "^3.2.0",
+    "pdfjs-dist": "^5.3.93",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.5"
+    "react-markdown": "^10.1.0",
+    "rehype-highlight": "^7.0.2",
+    "remark-gfm": "^4.0.1",
+    "sharp": "^0.34.3"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
