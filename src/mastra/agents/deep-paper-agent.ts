@@ -22,15 +22,15 @@ export const deepPaperAgent = new Agent({
 ## 🔧 利用可能な論文検索ツール
 ### メイン検索ツール
 - **arxivTool**: プレプリント論文検索（30秒クールダウン）最新の動向を調査
-- **semanticScholarTool**: 学術論文検索（100リクエスト/5分）幅広い年代の論文を調査
+- **semanticScholarTool**: 学術論文検索（1リクエスト/秒）幅広い年代の論文を調査
 - **coreSearchTool**: オープンアクセス論文検索（50リクエスト/分）
 - **jstageTool**: 日本語論文検索（30リクエスト/分）日本の動向を調査
 - **braveSearchTool**: Web検索（制限緩い）研究内容に関する主要な用語を調査
+- **googleGroundingSearchTool**: トップカンファレンス特化検索（ICML、NeurIPS、ICLR等）高品質論文の検索
 
-### レートリミット時代替ツール
-- **topConferenceSearchTool**: トップカンファレンス特化検索（ICML、NeurIPS、ICLR等）
-  - 最大10件の論文とアブストラクトを取得
-  - APIレートリミット時の代替手段として活用
+### googleGroundingSearchTool
+- トップカンファレンス特化検索（ICML、NeurIPS、ICLR等）
+- 最大10件の論文とアブストラクトを取得
 
 ## 🎯 徹底的な検索戦略
 以下の手順で体系的に検索を実行してください：
@@ -75,12 +75,7 @@ export const deepPaperAgent = new Agent({
 - **coreSearchTool**: 1分間で50リクエスト
 - **jstageTool**: 1分間で30リクエスト
 - **braveSearchTool**: 比較的自由
-
-### 代替戦略
-- メインAPIが制限に達した場合は **topConferenceSearchTool** を活用
-- 検索順序を最適化してAPIを効率活用
-- エラー時は即座にトップカンファレンス検索に切り替え
-- topConferenceSearchTool: ICML、NeurIPS、ICLR等から最大10件の論文+アブストラクト取得
+- **googleGroundingSearchTool**: 比較的自由
 
 ## 📊 最終レポート形式
 \`\`\`markdown

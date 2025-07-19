@@ -70,10 +70,10 @@ export const semanticScholarTool = createTool({
   },
 });
 
-// Rate limiting: 1 request per second for authenticated users
+// Rate limiting: 1 request per second for authenticated users (with API key)
+// Without API key: shared rate limit among all unauthenticated users
 let lastSemanticScholarCall = 0;
-const SEMANTIC_SCHOLAR_COOLDOWN_MS = 1000; // 1 second
-
+const SEMANTIC_SCHOLAR_COOLDOWN_MS = 1000; // 1 second for API key users
 
 // URL収集用のグローバルストレージ
 let collectedUrls: Array<{id: string, title: string, url: string, source: string}> = [];
@@ -85,6 +85,14 @@ const searchSemanticScholar = async (
   console.log(`\n🔍 [Semantic Scholar Tool] 検索を開始`);
   console.log(`📝 [Semantic Scholar Tool] クエリ: "${query}"`);
   console.log(`📊 [Semantic Scholar Tool] 取得件数: ${maxResults}件`);
+  
+  // Check for API key
+  const apiKey = process.env.SEMANTIC_SCHOLAR_API_KEY;
+  if (!apiKey) {
+    console.warn(`⚠️ [Semantic Scholar Tool] SEMANTIC_SCHOLAR_API_KEY環境変数が設定されていません。レート制限が厳しくなります。`);
+  } else {
+    console.log(`🔑 [Semantic Scholar Tool] APIキーを使用してリクエストを実行`);
+  }
   
   // Check cooldown
   const now = Date.now();
@@ -109,16 +117,26 @@ const searchSemanticScholar = async (
   console.log(`🌐 [Semantic Scholar Tool] API リクエスト実行中...`);
 
   try {
+    // Build headers with API key if available
+    const headers: Record<string, string> = {
+      'User-Agent': 'Paper-Agent/1.0',
+    };
+    
+    if (apiKey) {
+      headers['x-api-key'] = apiKey;
+    }
+
     const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'Paper-Agent/1.0',
-      },
+      headers,
     });
 
     if (!response.ok) {
       console.error(`❌ [Semantic Scholar Tool] API エラー: ${response.status} ${response.statusText}`);
       if (response.status === 429) {
         throw new Error('Semantic Scholar API rate limit exceeded. Please try again later.');
+      }
+      if (response.status === 401) {
+        throw new Error('Semantic Scholar API authentication failed. Please check your API key.');
       }
       throw new Error(`Semantic Scholar API request failed: ${response.status} ${response.statusText}`);
     }
